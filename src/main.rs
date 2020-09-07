@@ -1,10 +1,10 @@
 mod animation;
 use animation::getter::list;
 
-/* struct MinimalItem {
+struct MinimalItem {
   pub id: usize,
   pub title: String,
-} */
+}
 
 #[async_std::main]
 async fn main() {
@@ -23,11 +23,20 @@ async fn main() {
 
   match anime {
     Ok(anime_iter) => {
-      for item in anime_iter {
+      /* for item in anime_iter {
         if item.id == 1103 {
           println!("{:#?}", item)
         }
-      }
+      } */
+      let minimal = anime_iter.iter().map(|item| {
+        let id = item.id;
+        let title = &item.title;
+        MinimalItem {
+          id: id,
+          title: title.to_string(),
+        };
+      });
+      println!("{:#?}", minimal);
     }
     _ => println!("failure"),
   }
